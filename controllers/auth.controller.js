@@ -43,7 +43,7 @@ exports.signup = async (req, res) => {
         }
         res.status(201).send(postResponse);
     } catch (err) {
-        console.err("Some error while saving the user in db", err.message);
+        console.log("Some error while saving the user in db", err.message);
         res.status(500).send({
             message: "Some internal error while inserting the element"
         })
@@ -90,7 +90,7 @@ exports.signin = async (req, res)=> {
       }
       console.log(user.userId)
       var token = jwt.sign({ id: user.userId }, config.secret, {
-        expiresIn: 120 // 2 minutes
+        expiresIn: 600 // 10 minutes
       });
 
       res.status(200).send({
