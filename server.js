@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require('cors');
+const { userResponse } = require('./utils/objectConcverter');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended :true}));
@@ -47,6 +48,25 @@ app.use(bodyParser.urlencoded({extended :true}));
  */
 async function init() {
 
+    /**
+     * Creating an Engineer
+     * 
+     */
+
+    const engg = await User.findOne({userId : "eng01"});
+
+    if(engg){
+        console.log("One default engg already exist");
+    }else{
+        const engInserted  = await User.create({
+            name: "Mahesh",
+            userId: "eng01", // It should be atleat 16, else will throw error
+            email: "Kankvish1@gmail.com",  // If we don't pass this, it will throw the error
+            userType: "ENGINEER",
+            password :bcrypt.hashSync("Welcome1", 8) //this field should be hidden from the end user
+
+        })
+    }
 
     var user = await User.findOne({ userId: "admin" });
 
