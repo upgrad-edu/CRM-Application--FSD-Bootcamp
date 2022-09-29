@@ -89,6 +89,14 @@ exports.updateTicket = async (req, res) => {
             ticket.assignee = req.body.assignee !=undefined ? req.body.assignee : ticket.assignee
 
         var updatedTicket = await ticket.save();
+        
+        const engineer = await User.findOne({
+            userId: ticket.assignee
+        });
+
+        const reporter = await User.findOne({
+            userId: ticket.reporter
+        });
 
         /**
          * Sending the notification for ticket updation
